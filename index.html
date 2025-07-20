@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Romantic Cinema Date Invitation</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Georgia", serif;
+                background: linear-gradient(
+                    135deg,
+                    #2c1810 0%,
+                    #4a2c2a 50%,
+                    #8b4a6b 100%
+                );
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow-x: hidden;
+                position: relative;
+            }
+
+            .floating-hearts {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 1;
+            }
+
+            .heart {
+                position: absolute;
+                color: rgba(255, 192, 203, 0.3);
+                font-size: 1.5rem;
+                animation: floatUp 8s linear infinite;
+            }
+
+            @keyframes floatUp {
+                0% {
+                    transform: translateY(100vh) rotate(0deg);
+                    opacity: 0;
+                }
+                10% {
+                    opacity: 1;
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100px) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+
+            .invitation-container {
+                max-width: 900px;
+                width: 90%;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(20px);
+                border-radius: 30px;
+                border: 2px solid rgba(255, 192, 203, 0.3);
+                padding: 50px;
+                text-align: center;
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+                position: relative;
+                z-index: 10;
+                animation: gentleFloat 4s ease-in-out infinite;
+            }
+
+            @keyframes gentleFloat {
+                0%,
+                100% {
+                    transform: translateY(0px);
+                }
+                50% {
+                    transform: translateY(-8px);
+                }
+            }
+
+            .romantic-header {
+                font-size: 3rem;
+                font-weight: 300;
+                background: linear-gradient(
+                    45deg,
+                    #d63384,
+                    #dc3545,
+                    #6f42c1,
+                    #e83e8c
+                );
+                background-size: 300% 300%;
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: romanticGlow 4s ease infinite;
+                margin-bottom: 15px;
+                font-family: "Georgia", serif;
+                letter-spacing: 2px;
+            }
+
+            @keyframes romanticGlow {
+                0%,
+                100% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+            }
+
+            .subtitle {
+                font-size: 1.5rem;
+                color: #8b4a6b;
+                margin-bottom: 25px;
+                font-style: italic;
+                font-weight: 300;
+            }
+
+            .love-quote {
+                font-size: 1.1rem;
+                color: #6c757d;
+                font-style: italic;
+                margin-bottom: 35px;
+                padding: 20px;
+                background: rgba(255, 192, 203, 0.1);
+                border-radius: 15px;
+                border-left: 4px solid #e83e8c;
+            }
+
+            .movie-frame {
+                width: 250px;
+                height: 350px;
+                background: url("images.jpg");
+                background-size: cover;
+                border-radius: 20px;
+                margin: 30px auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 15px 40px rgba(214, 51, 132, 0.4);
+                transition: transform 0.4s ease;
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .movie-frame::before {
+                content: "";
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(
+                    circle,
+                    rgba(255, 255, 255, 0.1) 0%,
+                    transparent 70%
+                );
+                animation: shimmer 3s ease-in-out infinite;
+            }
+
+            @keyframes shimmer {
+                0%,
+                100% {
+                    transform: rotate(0deg);
+                }
+                50% {
+                    transform: rotate(180deg);
+                }
+            }
+
+            .movie-frame:hover {
+                transform: scale(1.05) rotateY(5deg);
+            }
+
+            .movie-title {
+                font-size: 1.8rem;
+                font-weight: bold;
+                margin-bottom: 10px;
+                z-index: 2;
+            }
+
+            .movie-subtitle {
+                font-size: 1rem;
+                opacity: 0.9;
+                z-index: 2;
+            }
+
+            .details-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 30px;
+                margin: 50px 0;
+            }
+
+            .detail-card {
+                background: linear-gradient(
+                    135deg,
+                    rgba(255, 192, 203, 0.1),
+                    rgba(232, 62, 140, 0.05)
+                );
+                border-radius: 20px;
+                padding: 30px;
+                border: 1px solid rgba(255, 192, 203, 0.2);
+                transition: all 0.4s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .detail-card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 192, 203, 0.1),
+                    transparent
+                );
+                transition: left 0.8s ease;
+            }
+
+            .detail-card:hover::before {
+                left: 100%;
+            }
+
+            .detail-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 40px rgba(255, 192, 203, 0.2);
+            }
+
+            .detail-icon {
+                font-size: 2.5rem;
+                margin-bottom: 20px;
+                display: block;
+                filter: drop-shadow(0 0 10px rgba(214, 51, 132, 0.3));
+            }
+
+            .detail-title {
+                font-size: 1.3rem;
+                color: #8b4a6b;
+                margin-bottom: 15px;
+                font-weight: 600;
+                font-family: "Georgia", serif;
+            }
+
+            .detail-info {
+                color: #495057;
+                font-size: 1.1rem;
+                line-height: 1.7;
+            }
+
+            .romantic-elements {
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                margin: 40px 0;
+                flex-wrap: wrap;
+            }
+
+            .romantic-icon {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 2rem;
+                color: white;
+                cursor: pointer;
+                transition: all 0.4s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .romantic-icon::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 50%;
+                transition: all 0.6s ease;
+                transform: translate(-50%, -50%);
+            }
+
+            .romantic-icon:hover::before {
+                width: 120%;
+                height: 120%;
+            }
+
+            .romantic-icon:hover {
+                transform: scale(1.1) rotate(10deg);
+            }
+
+            .rose {
+                background: linear-gradient(135deg, #dc3545, #e83e8c);
+            }
+            .wine {
+                background: linear-gradient(135deg, #6f42c1, #d63384);
+            }
+            .moon {
+                background: linear-gradient(135deg, #ffc107, #fd7e14);
+            }
+            .star {
+                background: linear-gradient(135deg, #20c997, #0dcaf0);
+            }
+
+            .cta-section {
+                margin-top: 50px;
+            }
+
+            .cta-button {
+                background: linear-gradient(45deg, #d63384, #dc3545);
+                border: none;
+                color: white;
+                padding: 20px 45px;
+                font-size: 1.2rem;
+                font-weight: 500;
+                border-radius: 50px;
+                cursor: pointer;
+                transition: all 0.4s ease;
+                box-shadow: 0 10px 30px rgba(214, 51, 132, 0.3);
+                position: relative;
+                overflow: hidden;
+                margin: 0 15px 15px 0;
+                font-family: "Georgia", serif;
+                letter-spacing: 1px;
+            }
+
+            .cta-button::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.2),
+                    transparent
+                );
+                transition: left 0.6s ease;
+            }
+
+            .cta-button:hover::before {
+                left: 100%;
+            }
+
+            .cta-button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 15px 40px rgba(214, 51, 132, 0.5);
+            }
+
+            .secondary-btn {
+                background: linear-gradient(45d, #6f42c1, #e83e8c);
+            }
+
+            .romantic-message {
+                margin-top: 40px;
+                font-size: 1.2rem;
+                color: #8b4a6b;
+                font-style: italic;
+                padding: 25px;
+                background: rgba(255, 192, 203, 0.1);
+                border-radius: 15px;
+                font-family: "Georgia", serif;
+            }
+
+            @media (max-width: 600px) {
+                .invitation-container {
+                    padding: 30px 20px;
+                }
+
+                .romantic-header {
+                    font-size: 2.2rem;
+                }
+
+                .subtitle {
+                    font-size: 1.2rem;
+                }
+
+                .details-grid {
+                    grid-template-columns: 1fr;
+                    gap: 20px;
+                }
+
+                .movie-frame {
+                    width: 200px;
+                    height: 280px;
+                }
+
+                .romantic-elements {
+                    gap: 20px;
+                }
+
+                .cta-button {
+                    width: 100%;
+                    margin: 10px 0;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="floating-hearts" id="hearts"></div>
+
+        <div class="invitation-container">
+            <h1 class="romantic-header">
+                A Special Marvel Cinematic Universe Date
+            </h1>
+            <h2 class="subtitle">Cinema Date Under the Stars</h2>
+
+            <div class="love-quote">
+                "In all the world, there is no heart for me like yours. In all
+                the world, there is no love for you like mine." — Maya Angelou
+            </div>
+
+            <div class="movie-frame" onclick="createRoseEffect()">
+                <div class="movie-title">🎬</div>
+            </div>
+
+            <div class="romantic-elements">
+                <div
+                    class="romantic-icon rose"
+                    onclick="createRoseShower()"
+                    title="Roses for you"
+                >
+                    🌹
+                </div>
+                <div
+                    class="romantic-icon wine"
+                    onclick="createSparkleEffect()"
+                    title="Cheers to us"
+                >
+                    🥂
+                </div>
+                <div
+                    class="romantic-icon moon"
+                    onclick="createMoonlight()"
+                    title="Moonlit night"
+                >
+                    🌙
+                </div>
+                <div
+                    class="romantic-icon star"
+                    onclick="createStarfall()"
+                    title="Wish upon a star"
+                >
+                    ⭐
+                </div>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-card">
+                    <div class="detail-icon">💕</div>
+                    <div class="detail-title">Our Movie Night</div>
+                    <div class="detail-info">A Marvelous Cinema Date</div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-icon">📅</div>
+                    <div class="detail-title">Perfect Timing</div>
+                    <div class="detail-info">This July 23, 2025</div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-icon">📽️</div>
+                    <div class="detail-title">Our Cinema</div>
+                    <div class="detail-info">KCC Mall de Zamboanga 3/F</div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-icon">📧</div>
+                    <div class="detail-title">Reason</div>
+                    <div class="detail-info">
+                        I really want us to dive into the awesome world of
+                        superheroes before "Avengers: Doomsday" comes out. But
+                        more than that, I just want to hang out with you, share
+                        some popcorn, laugh together, and sneak those little
+                        looks at each other in the dark theater. It's not just
+                        about watching the movie; it's about making great
+                        memories and enjoying every second together.
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <button class="cta-button" onclick="acceptRomanticDate()">
+                    Yes, I'd Love To! 💖
+                </button>
+                <button
+                    class="cta-button secondary-btn"
+                    onclick="planTogether()"
+                >
+                    Let's Make It Perfect ✨
+                </button>
+            </div>
+
+            <div class="romantic-message">
+                "Every love story is beautiful, but ours is my favorite. Let's
+                add another magical chapter together." 💕
+            </div>
+        </div>
+
+        <script>
+            function createFloatingHearts() {
+                const heartsContainer = document.getElementById("hearts");
+
+                function addHeart() {
+                    const heart = document.createElement("div");
+                    heart.className = "heart";
+                    heart.innerHTML = Math.random() > 0.5 ? "💕" : "💖";
+                    heart.style.left = Math.random() * 100 + "%";
+                    heart.style.animationDuration = Math.random() * 3 + 5 + "s";
+                    heart.style.animationDelay = Math.random() * 2 + "s";
+                    heartsContainer.appendChild(heart);
+
+                    setTimeout(() => {
+                        if (heart.parentNode) {
+                            heart.remove();
+                        }
+                    }, 8000);
+                }
+
+                setInterval(addHeart, 800);
+
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(addHeart, i * 200);
+                }
+            }
+
+            function createRoseEffect() {
+                const container = document.querySelector(".movie-frame");
+                for (let i = 0; i < 12; i++) {
+                    const rose = document.createElement("div");
+                    rose.innerHTML = "🌹";
+                    rose.style.position = "absolute";
+                    rose.style.left = Math.random() * 100 + "%";
+                    rose.style.top = Math.random() * 100 + "%";
+                    rose.style.fontSize = "1.5rem";
+                    rose.style.animation = "fadeOut 2s ease-out forwards";
+                    rose.style.pointerEvents = "none";
+                    rose.style.zIndex = "1000";
+                    container.appendChild(rose);
+
+                    setTimeout(() => rose.remove(), 2000);
+                }
+            }
+
+            function createRoseShower() {
+                const container = document.body;
+                for (let i = 0; i < 20; i++) {
+                    const rose = document.createElement("div");
+                    rose.innerHTML = "🌹";
+                    rose.style.position = "fixed";
+                    rose.style.left = Math.random() * window.innerWidth + "px";
+                    rose.style.top = -50 + "px";
+                    rose.style.fontSize = "2rem";
+                    rose.style.animation = `fall ${
+                        Math.random() * 2 + 3
+                    }s linear forwards`;
+                    rose.style.pointerEvents = "none";
+                    rose.style.zIndex = "1000";
+                    container.appendChild(rose);
+
+                    setTimeout(() => rose.remove(), 5000);
+                }
+            }
+
+            function createSparkleEffect() {
+                const container = document.body;
+                for (let i = 0; i < 15; i++) {
+                    const sparkle = document.createElement("div");
+                    sparkle.innerHTML = Math.random() > 0.5 ? "✨" : "💫";
+                    sparkle.style.position = "fixed";
+                    sparkle.style.left =
+                        Math.random() * window.innerWidth + "px";
+                    sparkle.style.top =
+                        Math.random() * window.innerHeight + "px";
+                    sparkle.style.fontSize = "1.5rem";
+                    sparkle.style.animation = "sparkle 2s ease-out forwards";
+                    sparkle.style.pointerEvents = "none";
+                    sparkle.style.zIndex = "1000";
+                    container.appendChild(sparkle);
+
+                    setTimeout(() => sparkle.remove(), 2000);
+                }
+            }
+
+            function createMoonlight() {
+                const invitation = document.querySelector(
+                    ".invitation-container"
+                );
+                const overlay = document.createElement("div");
+                overlay.style.position = "absolute";
+                overlay.style.top = "0";
+                overlay.style.left = "0";
+                overlay.style.width = "100%";
+                overlay.style.height = "100%";
+                overlay.style.background =
+                    "radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 60%)";
+                overlay.style.pointerEvents = "none";
+                overlay.style.borderRadius = "30px";
+                overlay.style.opacity = "0";
+                overlay.style.transition = "opacity 1s ease";
+                invitation.appendChild(overlay);
+
+                setTimeout(() => (overlay.style.opacity = "1"), 100);
+                setTimeout(() => overlay.remove(), 3000);
+            }
+
+            function createStarfall() {
+                const container = document.body;
+                for (let i = 0; i < 12; i++) {
+                    const star = document.createElement("div");
+                    star.innerHTML = "⭐";
+                    star.style.position = "fixed";
+                    star.style.right = -50 + "px";
+                    star.style.top =
+                        Math.random() * window.innerHeight * 0.5 + "px";
+                    star.style.fontSize = "1.5rem";
+                    star.style.animation = `starfall ${
+                        Math.random() * 1 + 2
+                    }s linear forwards`;
+                    star.style.pointerEvents = "none";
+                    star.style.zIndex = "1000";
+                    container.appendChild(star);
+
+                    setTimeout(() => star.remove(), 3000);
+                }
+            }
+
+            function acceptRomanticDate() {
+                const message = document.createElement("div");
+                message.innerHTML =
+                    "💕 My heart is so happy! This will be the most wonderful evening together! 💕";
+                message.style.position = "fixed";
+                message.style.top = "50%";
+                message.style.left = "50%";
+                message.style.transform = "translate(-50%, -50%)";
+                message.style.background =
+                    "linear-gradient(45deg, #d63384, #dc3545)";
+                message.style.color = "white";
+                message.style.padding = "25px 45px";
+                message.style.borderRadius = "30px";
+                message.style.fontSize = "1.3rem";
+                message.style.fontWeight = "500";
+                message.style.zIndex = "10000";
+                message.style.boxShadow = "0 25px 60px rgba(214, 51, 132, 0.4)";
+                message.style.animation = "gentleFloat 2s ease-in-out infinite";
+                message.style.textAlign = "center";
+                message.style.fontFamily = "Georgia, serif";
+                document.body.appendChild(message);
+
+                // Add heart explosion
+                createRoseShower();
+
+                setTimeout(() => message.remove(), 4000);
+            }
+
+            function planTogether() {
+                const options = `Perfect! Let's make this evening absolutely magical together! ✨
+
+🎬 Movie showtime preferences
+
+🍿 Favorite movie snacks
+
+I want everything to be just right for our special date! 💕`;
+
+                alert(options);
+            }
+
+            const style = document.createElement("style");
+            style.textContent = `
+            @keyframes fadeOut {
+                0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+                100% { opacity: 0; transform: translateY(-30px) scale(0.7) rotate(180deg); }
+            }
+            
+            @keyframes fall {
+                0% { transform: translateY(-50px) rotate(0deg); }
+                100% { transform: translateY(100vh) rotate(360deg); }
+            }
+            
+            @keyframes sparkle {
+                0% { opacity: 1; transform: scale(0) rotate(0deg); }
+                50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+                100% { opacity: 0; transform: scale(0.5) rotate(360deg); }
+            }
+            
+            @keyframes starfall {
+                0% { transform: translateX(0) translateY(0) rotate(0deg); }
+                100% { transform: translateX(-100vw) translateY(50px) rotate(360deg); }
+            }
+        `;
+            document.head.appendChild(style);
+
+            createFloatingHearts();
+        </script>
+    </body>
+</html>
